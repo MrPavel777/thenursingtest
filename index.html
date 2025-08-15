@@ -1,58 +1,54 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Тренажёр «Сестринское дело»</title>
-    <meta name="theme-color" content="#0f172a">
-    <style>
-      body { margin:0; font-family:system-ui; background:#0b1020; color:#e5e7eb; }
-      .container{ max-width:1000px; margin:0 auto; padding:16px; }
-      .card{ background:#0f172a; border:1px solid #1f2937; border-radius:12px; padding:16px; margin-bottom:16px; }
-      .btn{ padding:8px 14px; border-radius:8px; border:1px solid #374151; background:#111827; color:#e5e7eb; cursor:pointer; }
-      .btn:hover{ background:#1e293b; }
-      .opt{ border:1px solid #374151; border-radius:10px; padding:10px; margin:6px 0; cursor:pointer; }
-      .opt.correct{ background:#06220f; border-color:#16a34a; }
-      .opt.wrong{ background:#210b0b; border-color:#dc2626; }
-      .footer{ text-align:center; color:#9ca3af; margin-top:20px; font-size:12px; }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Тренажёр‑тест «Сестринское дело»</h1>
-      <div id="app">Загрузка...</div>
-      <div class="footer">© 2025 Тренажёр. Прогресс сохраняется локально.</div>
-    </div>
-    <script>
-      async function loadQuestions(){
-        const txt = await fetch("questions.txt").then(r=>r.text());
-        return txt.trim().split(/\n(?=\d+\.)/).map((block,i)=>{
-          const lines = block.trim().split(/\n/);
-          const num = parseInt(lines[0]);
-          const qtext = lines[0].replace(/^\d+\.\s*/, "");
-          const opts = lines.slice(1).map(l=>l.replace(/^\s*[АAБВГ]\)\s*/, ""));
-          return {num, qtext, opts, correct: opts[0]};
-        });
-      }
-      const app=document.getElementById("app");
-      let questions=[], idx=0, answers={};
-      function render(){
-        if(idx>=questions.length){ app.innerHTML="<h2>Тест завершён!</h2><button class='btn' onclick='resetProgress()'>Сбросить прогресс</button>"; return; }
-        const q=questions[idx];
-        let html="<div class='card'><div><b>Вопрос "+q.num+"</b><p>"+q.qtext+"</p></div>";
-        q.opts.forEach((opt,i)=>{
-          let cls="opt"; if(answers[q.num]){ if(opt===q.correct) cls+=" correct"; else if(opt===answers[q.num]) cls+=" wrong"; }
-          html+="<div class='"+cls+"' onclick='choose(""+q.num+"",""+opt.replace(/"/g,"&quot;")+"")'>"+["А","Б","В","Г"][i]+") "+opt+"</div>";
-        });
-        html+="</div><div><button class='btn' onclick='prev()'>← Назад</button> <button class='btn' onclick='next()'>Вперёд →</button></div>";
-        app.innerHTML=html;
-      }
-      function choose(num,opt){ answers[num]=opt; save(); render(); }
-      function prev(){ if(idx>0){ idx--; render(); } }
-      function next(){ if(idx<questions.length-1){ idx++; render(); } else { render(); } }
-      function save(){ localStorage.setItem("answers", JSON.stringify(answers)); }
-      function resetProgress(){ localStorage.clear(); answers={}; idx=0; render(); }
-      loadQuestions().then(qs=>{ questions=qs; const saved=localStorage.getItem("answers"); if(saved) answers=JSON.parse(saved); render(); });
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тренажёр-тест «Сестринское дело»</title>
+  <meta name="theme-color" content="#0f172a">
+  <style>
+    :root { --bg:#0b1020; --card:#0f172a; --muted:#9ca3af; --text:#e5e7eb; --border:#1f2937; --btn:#111827; --btnb:#374151; --primary:#2563eb; --primary-b:#1d4ed8; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica Neue,Arial;background:var(--bg);color:var(--text)}
+    a{color:inherit}
+    .container{max-width:1100px;margin:0 auto;padding:16px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 10px 20px rgba(0,0,0,.25)}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .btn{border:1px solid var(--btnb);background:var(--btn);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer}
+    .btn:hover{background:#0b1222}
+    .btn.primary{background:var(--primary);border-color:var(--primary-b)}
+    .btn.primary:hover{background:#1e40af}
+    .muted{color:var(--muted)}
+    .badge{border:1px solid var(--btnb);border-radius:999px;padding:4px 10px;font-size:12px}
+    .input, select{width:100%;background:#0b1222;color:var(--text);border:1px solid var(--btnb);border-radius:10px;padding:10px 12px}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width: 720px){.options{grid-template-columns:1fr}}
+    .opt{border:1px solid var(--btnb);border-radius:12px;padding:12px;background:#0b1222;cursor:pointer}
+    .opt.correct{border-color:#16a34a;background:#06220f}
+    .opt.wrong{border-color:#dc2626;background:#210b0b}
+    .opt.chosen{outline:2px solid #334155}
+    .label{font-weight:700;margin-right:6px}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .pill{padding:6px 10px;border-radius:999px;background:#0b1222;border:1px solid var(--btnb)}
+    .fav{cursor:pointer}
+    .progress{height:10px;background:#111827;border-radius:999px;overflow:hidden;border:1px solid var(--btnb)}
+    .progress>div{height:100%;background:#22c55e;width:0%}
+    .tile{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:8px}
+    .tile:hover{outline:2px solid #233a72}
+    .tile-title{font-size:18px;font-weight:700}
+    .tile-desc{color:var(--muted);font-size:14px}
+    .footer{color:#9ca3af;font-size:12px;text-align:center;padding:24px 0}
+    .itemline{border:1px solid var(--btnb);padding:8px 10px;border-radius:10px;background:#0b1222;cursor:pointer}
+    .itemline.active{background:#111827}
+    .alert{border-color:#f87171}
+  </style>
+</head>
+<body>
+  <div id="root">Загрузка...</div>
+  <script type="module">
+    // здесь подключается твой основной JS (App.jsx сборка)
+    import App from "./src/main.jsx";
+  </script>
+</body>
 </html>
