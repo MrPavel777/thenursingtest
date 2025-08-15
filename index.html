@@ -1,54 +1,52 @@
 <!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Тренажёр-тест «Сестринское дело»</title>
-  <meta name="theme-color" content="#0f172a">
-  <style>
-    :root { --bg:#0b1020; --card:#0f172a; --muted:#9ca3af; --text:#e5e7eb; --border:#1f2937; --btn:#111827; --btnb:#374151; --primary:#2563eb; --primary-b:#1d4ed8; }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica Neue,Arial;background:var(--bg);color:var(--text)}
-    a{color:inherit}
-    .container{max-width:1100px;margin:0 auto;padding:16px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 10px 20px rgba(0,0,0,.25)}
-    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-    .btn{border:1px solid var(--btnb);background:var(--btn);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer}
-    .btn:hover{background:#0b1222}
-    .btn.primary{background:var(--primary);border-color:var(--primary-b)}
-    .btn.primary:hover{background:#1e40af}
-    .muted{color:var(--muted)}
-    .badge{border:1px solid var(--btnb);border-radius:999px;padding:4px 10px;font-size:12px}
-    .input, select{width:100%;background:#0b1222;color:var(--text);border:1px solid var(--btnb);border-radius:10px;padding:10px 12px}
-    .options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @media (max-width: 720px){.options{grid-template-columns:1fr}}
-    .opt{border:1px solid var(--btnb);border-radius:12px;padding:12px;background:#0b1222;cursor:pointer}
-    .opt.correct{border-color:#16a34a;background:#06220f}
-    .opt.wrong{border-color:#dc2626;background:#210b0b}
-    .opt.chosen{outline:2px solid #334155}
-    .label{font-weight:700;margin-right:6px}
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-    .pill{padding:6px 10px;border-radius:999px;background:#0b1222;border:1px solid var(--btnb)}
-    .fav{cursor:pointer}
-    .progress{height:10px;background:#111827;border-radius:999px;overflow:hidden;border:1px solid var(--btnb)}
-    .progress>div{height:100%;background:#22c55e;width:0%}
-    .tile{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:8px}
-    .tile:hover{outline:2px solid #233a72}
-    .tile-title{font-size:18px;font-weight:700}
-    .tile-desc{color:var(--muted);font-size:14px}
-    .footer{color:#9ca3af;font-size:12px;text-align:center;padding:24px 0}
-    .itemline{border:1px solid var(--btnb);padding:8px 10px;border-radius:10px;background:#0b1222;cursor:pointer}
-    .itemline.active{background:#111827}
-    .alert{border-color:#f87171}
-  </style>
-</head>
-<body>
-  <div id="root">Загрузка...</div>
-  <script type="module">
-    // здесь подключается твой основной JS (App.jsx сборка)
-    import App from "./src/main.jsx";
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Тренажёр-тест «Сестринское дело»</title>
+    <meta name="theme-color" content="#0f172a">
+    <style>
+      :root { --bg:#0b1020; --card:#0f172a; --muted:#9ca3af; --text:#e5e7eb; --border:#1f2937; --btn:#111827; --btnb:#374151; --primary:#2563eb; --primary-b:#1d4ed8; }
+      *{box-sizing:border-box}
+      body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica Neue,Arial;background:var(--bg);color:var(--text)}
+      a{color:inherit}
+      .container{max-width:1100px;margin:0 auto;padding:16px}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 10px 20px rgba(0,0,0,.25)}
+      .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+      .btn{border:1px solid var(--btnb);background:var(--btn);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer}
+      .btn:hover{background:#0b1222}
+      .btn.primary{background:var(--primary);border-color:var(--primary-b)}
+      .btn.primary:hover{background:#1e40af}
+      .muted{color:var(--muted)}
+      .badge{border:1px solid var(--btnb);border-radius:999px;padding:4px 10px;font-size:12px}
+      .input, select{width:100%;background:#0b1222;color:var(--text);border:1px solid var(--btnb);border-radius:10px;padding:10px 12px}
+      .options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+      @media (max-width: 720px){.options{grid-template-columns:1fr} .grid{grid-template-columns:1fr} .grid4{grid-template-columns:1fr}}
+      .opt{border:1px solid var(--btnb);border-radius:12px;padding:12px;background:#0b1222;cursor:pointer}
+      .opt.correct{border-color:#16a34a;background:#06220f}
+      .opt.wrong{border-color:#dc2626;background:#210b0b}
+      .opt.chosen{outline:2px solid #334155}
+      .label{font-weight:700;margin-right:6px}
+      .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+      .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+      .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+      .pill{padding:6px 10px;border-radius:999px;background:#0b1222;border:1px solid var(--btnb)}
+      .fav{cursor:pointer}
+      .progress{height:10px;background:#111827;border-radius:999px;overflow:hidden;border:1px solid var(--btnb)}
+      .progress>div{height:100%;background:#22c55e;width:0%}
+      .tile{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:8px}
+      .tile:hover{outline:2px solid #233a72}
+      .tile-title{font-size:18px;font-weight:700}
+      .tile-desc{color:var(--muted);font-size:14px}
+      .formrow{display:flex;gap:8px;align-items:center;margin:6px 0}
+      .footer{color:#9ca3af;font-size:12px;text-align:center;padding:24px 0}
+      .itemline{border:1px solid var(--btnb);padding:8px 10px;border-radius:10px;background:#0b1222;cursor:pointer}
+      .itemline.active{background:#111827}
+      .alert{border-color:#f87171}
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
